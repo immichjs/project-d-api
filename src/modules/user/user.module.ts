@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 
 import { User } from './domain/user.entity';
 import { UserRepository } from './infrastructure/repositories/user.repository';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../../utils/shared/shared.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), SharedModule],

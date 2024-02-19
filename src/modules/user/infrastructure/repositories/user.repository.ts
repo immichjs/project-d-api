@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -7,18 +8,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../domain/user.entity';
 import { CreateUserDto } from '../../dtos/create-user.dto';
-import { CryptService } from 'src/modules/shared/services/crypt/crypt.service';
 import { UserRepositoryAbstract } from '../interfaces/user-repository.abstract';
+import { CryptService } from '../../../../utils/shared/services/crypt/crypt.service';
+import { UserStatus } from 'src/utils/enums/user-status.enum';
 
 @Injectable()
 export class UserRepository extends UserRepositoryAbstract {
-  constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-    private readonly cryptService: CryptService,
-  ) {
-    super();
-  }
+  @InjectRepository(User) private readonly userRepository: Repository<User>;
+  @Inject() private readonly cryptService: CryptService;
 
   public async find(): Promise<User[]> {
     return this.userRepository.find();
@@ -61,6 +58,7 @@ export class UserRepository extends UserRepositoryAbstract {
       email,
       phone,
       password: encryptedPassword,
+      status: UserStatus.INACTIVE,
     });
 
     const savedUser = await this.userRepository.save(user);

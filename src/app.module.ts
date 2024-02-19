@@ -4,13 +4,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Módules
 import { UserModule } from './modules/user/user.module';
-import { SharedModule } from './modules/shared/shared.module';
 import { CompanyModule } from './modules/company/company.module';
 import { TrackModule } from './modules/track/track.module';
 import { OrderModule } from './modules/order/order.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
 import { UnitModule } from './modules/unit/unit.module';
+
+import { SharedModule } from './utils/shared/shared.module';
 
 @Module({
   imports: [
